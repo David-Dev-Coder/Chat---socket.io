@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chato</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main class="main-container">
+        <div class="msg-container" id="msg"></div>
+        <div class="input-container">
+            <form id="form">
+                <div class="input-content">
+                    <input id="input" autocomplete="off" placeholder="Digite uma mensagem...">
+                    <button hidden>Enviar</button>
+                </div>
+            </form>
+        </div>
+
+        <dialog role="dialog" id="user-info-modal" tabindex="-1" aria-modal="true" aria-labelledby="dialog-title">
+            <div class="dialog-content">
+                <h2>Escolha um nome de usuário</h2>
+                <select class="select" id="select-name">
+                    <option value="invalid">--Selecione--</option>
+                </select>
+            </div>
+        </dialog>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
