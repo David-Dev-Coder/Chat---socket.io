@@ -8,18 +8,40 @@
 </head>
 
 <body>
-    <main class="main-container">
-        <div class="msg-container" id="msg"></div>
-        <div class="input-container">
-            <form id="form">
-                <div class="input-content">
-                    <input id="input" autocomplete="off" placeholder="Digite uma mensagem...">
-                    <button hidden>Enviar</button>
-                </div>
-            </form>
-        </div>
+    <div class="main-container">
+        <aside class="sidebar-container">
+            <nav>
+                <ul>
+                    <!-- <li class="selected">
+                        <figure>
+                            <img src="https://dummyjson.com/image/64" alt="img">
+                        </figure>
 
-        <dialog role="dialog" id="user-info-modal" tabindex="-1" aria-modal="true" aria-labelledby="dialog-title">
+                        <span></span>
+                    </li> -->
+                </ul>
+                
+                <button id="show-create-chat-modal">
+                    <figure>
+                        <svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="transparent" class=""></circle><path fill="#dfe0e2" fill-rule="evenodd" d="M12 23a11 11 0 1 0 0-22 11 11 0 0 0 0 22Zm0-17a1 1 0 0 1 1 1v4h4a1 1 0 1 1 0 2h-4v4a1 1 0 1 1-2 0v-4H7a1 1 0 1 1 0-2h4V7a1 1 0 0 1 1-1Z" clip-rule="evenodd" class=""></path></svg>
+                    </figure>
+                </button>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <div class="msg-container" id="msg"></div>
+            <div class="input-container">
+                <form class="default-form" id="form">
+                    <div class="input-content">
+                        <input id="input" autocomplete="off" placeholder="Digite uma mensagem...">
+                        <button hidden>Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <dialog class="default-dialog" role="dialog" id="user-info-modal" tabindex="-1" aria-modal="true" aria-labelledby="dialog-title">
             <div class="dialog-content">
                 <h2>Escolha um nome de usuário</h2>
                 <select class="select" id="select-name">
@@ -27,11 +49,29 @@
                 </select>
             </div>
         </dialog>
-    </main>
+
+        <dialog class="default-dialog" role="dialog" id="create-chat-modal" tabindex="-1" aria-modal="true" aria-labelledby="dialog-title">
+            <div class="dialog-content">
+                <div class="inner-dialog-content">
+                    <h2>Criar novo chat</h2>
+                    <p>Insira um nome para o chat</p>
+
+                    <form class="default-form">
+                        <div class="input-content">
+                            <input type="text" placeholder="Digite um nome...">
+                        </div>
+                        <button class="confirm-btn">Criar</button>
+                    </form>
+                </div>
+
+                <button class="close-btn">+</button>
+            </div>
+        </dialog>
+    </div>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="icons.js"></script>
     <script src="script.js"></script>
 </body>
 

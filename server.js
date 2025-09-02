@@ -7,7 +7,10 @@ const fs = require('fs').promises;
 app.use(express.static("public")); // Servir arquivos da pasta public
 
 let users = [];
+let chatRooms = [];
+let currentRoom = "";
 let data;
+let messages = {};
 
 async function getData() {
     try {
@@ -32,26 +35,62 @@ io.on("connection", (socket) => {
     socket.on("get data", () => {
         if (!data) getData();
 
-        io.emit("get data", data);
+        socket.emit("get data", data);
+    });
+
+    socket.on("join room", (_room) => {
+        socket.join(_room);
+
+        currentRoom = _room;
+
+        if (messages[_room]) socket.emit("get data", messages[_room]);
+    });
+
+    socket.on("leave room", (_room) => {
+        socket.leave(_room);
+
+        currentRoom = "";
+    });
+
+    socket.on("get chatrooms", () => {
+        socket.emit("chatrooms data", chatRooms);
+    });
+
+    socket.on("create chat", (username, data) => {
+        chatRooms.push(data);
+
+        io.emit("chatrooms data", chatRooms);
     });
 
     socket.on("new username", (name) => {
         users.push(name);
 
         socket.username = name;
-    });
-
-    socket.on("get users", () => {
         io.emit("get users", users);
     });
 
+    socket.on("get users", () => {
+        socket.emit("get users", users);
+    });
+
+    socket.on("get messages", (room) => {
+        socket.emit("get data", messages[room]);
+    });
+
     socket.on("chat message", (_username, msg) => {
-        let newMessage = { username: _username, msg, localeTime: new Date().toLocaleTimeString(), time: new Date().getTime() };
-        io.emit("chat message", newMessage);
+        if (currentRoom != "") {
+            let newMessage = { username: _username, msg, localeTime: new Date().toLocaleTimeString(), time: new Date().getTime() };
+            
+            io.to(currentRoom).emit("chat message", newMessage, currentRoom);
 
-        data.push(newMessage);
+            if (!messages[currentRoom]) messages[currentRoom] = [];
+            messages[currentRoom].push(newMessage);
+        }
+        
+        // io.emit("chat message", newMessage);
+        // data.push(newMessage);
 
-        setData(data);
+        // setData(data);
     });
 
     socket.on("disconnect", (val) => {
